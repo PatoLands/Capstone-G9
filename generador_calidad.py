@@ -129,6 +129,7 @@ def simular(lista, lote, t):
     lista_simulada = [lote]
     if np.count_nonzero(lista[:t+1]) == 0:
         # no se simula nada
+        q = calidad_lluvia(lote)
         for x in range(len(lista)):
             lista_simulada.append(lista[x])
         return lista_simulada
@@ -190,8 +191,8 @@ with open(ruta, "r") as archivo:
                 datos2.append(float(datos[k]))
         q.append(datos2)
 
-qqq = simulador_rodante(q, 81)
-for elem in qqq:
-    print(elem)
+# qqq = simulador_rodante(q, 81)
+# for elem in qqq:
+#     print(elem)
 
 

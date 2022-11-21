@@ -1,6 +1,6 @@
 from gurobipy import GRB, Model, quicksum
 import csv
-import generador_calidad
+# import generador_calidad
 #import parametros as p
 
 ruta = "q_lt_lluvia_esperada.csv"
