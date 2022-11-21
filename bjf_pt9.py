@@ -3,7 +3,7 @@ import csv
 import generador_calidad
 #import parametros as p
 
-parte = 2
+parte = 9
 limite_superior = 10 * (parte-1)
 
 

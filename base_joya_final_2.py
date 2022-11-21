@@ -1,30 +1,19 @@
 from gurobipy import GRB, Model, quicksum
-import csv
-import generador_calidad
 #import parametros as p
 
-parte = 2
-limite_superior = 10 * (parte-1)
-
-
-ruta = "q_lt_lluvia_esperada.csv"
-q_generador = []
+ruta = "q_lt.csv"
+q = []
 with open(ruta, "r") as archivo:
     lineas = archivo.readlines()
     lineas.pop(0)
     for linea in lineas:
         datos = linea.strip()
         datos = datos.split(";")
-        lote = datos.pop(0)
-        #lote = int(lote.split("_")[1])
+        datos.pop(0)
         datos2 = []
         for elem in datos:
             datos2.append(float(elem))
-        q_generador.append([lote]+datos2)
-q_generado = generador_calidad.simulador_rodante(q_generador, 60)
-q = q_generado
-for i in range(len(q)):
-    q[i] = q[i][1:]
+        q.append(datos2)
 for i in range(len(q)):
     q[i] = q[i][30:130]
 
@@ -112,7 +101,7 @@ v = {}          #l,t,o
 s = {}          #l,t,o binaria
 a = {}          #l,t,o
 n = {}          #l,t,o
-#aux = {}        #t
+aux = {}        #t
 x = {}          #i,p,t
 f = {}          #i,t
 wC = {}         #i,t
@@ -129,7 +118,7 @@ beta = {}       #i,p,t,r,j
 gamma = {}      #r,p,t
 
 for t in T:
-    #aux[t]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, ub= 1.0, name="aux_{}".format(t))
+    aux[t]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, ub= 1.0, name="aux_{}".format(t))
     for i in TU:
         f[i,t]=m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="f_{}_{}".format(i,t))
         wC[i,t]=m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="wC_{}_{}".format(i,t))
@@ -191,68 +180,6 @@ for i in range (3):
 
 m.update()
 
-###############################################################################
-
-with open('Solucion_pt1.sol', newline='\n') as csvfile:
-    reader = csv.reader((line.replace('  ', ' ') for line in csvfile), delimiter=' ')
-    next(reader)  # skip header
-    sol = {}
-    variables = 0
-    for var, value in reader:
-        variables += 1
-        #if float(value) != 0:
-        sol[var] = float(value)
-    #print(len(sol))
-
-#with open("solution.csv", "a") as archivo:
-#    for key in sol:
-#        linea = str(key) + ";" + str(sol[key]) + "\n"
-#        archivo.write(linea)
-
-
-def extract_variable(var):
-    for i in range(len(var)):
-        if var[i] == "_":
-            return var[:i]
-
-def t_en_2(var, key, sol, limite_superior, m):
-    var_como_lista = list(map(int,key.split('_')[1:]))
-    if var_como_lista[1] <= limite_superior:
-        m.addConstr(var[var_como_lista[0],var_como_lista[1]] == sol[key])
-
-for key in sol:
-    key2 = extract_variable(key)
-    #caso t en 2
-    if  key2 == "f" or key2 == "wC" or key2 == "wT":
-        #if key2 == "v": t_en_2(v, key, sol, limite_superior, m)
-        #elif key2 == "a": t_en_2(a, key, sol, limite_superior, m)
-        if key2 == "f": t_en_2(f, key, sol, limite_superior, m)
-        elif key2 == "wC": t_en_2(wC, key, sol, limite_superior, m)
-        elif key2 == "wT": t_en_2(wT, key, sol, limite_superior, m)
-    elif key2 == "v" or key2 == "a" or key2 == "s" or key2 == "n" or key2 == "x" or key2 == "c" or key2 == "z" or key2 == "y" or key2 == "u" or key2 == "I" or key2 == "wE" or key2 == "beta" or key2 == "gamma" or key2 == "wV":
-        var_como_lista = list(map(int,key.split('_')[1:]))
-        if var_como_lista[2] <= limite_superior:
-            if key2 == "x": m.addConstr(x[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "c": m.addConstr(c[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "v": m.addConstr(v[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "s": m.addConstr(s[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "a": m.addConstr(a[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "n": m.addConstr(n[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "wV": m.addConstr(wV[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "gamma": m.addConstr(gamma[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
-            elif key2 == "z": m.addConstr(z[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3]] == sol[key])
-            elif key2 == "y": m.addConstr(y[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3]] == sol[key])
-            #elif key2 == "u": m.addConstr(u[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3]] == sol[key])
-            elif key2 == "I": m.addConstr(I[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3]] == sol[key])
-            elif key2 == "wE": m.addConstr(wE[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3]] == sol[key])
-            elif key2 == "beta": m.addConstr(beta[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3],var_como_lista[4]] == sol[key])
-    elif key2 == "alpha":
-        var_como_lista = list(map(int,key.split('_')[1:]))
-        m.addConstr(alpha[var_como_lista[0],var_como_lista[1]] >= sol[key])
-  
-m.update()
-
-###############################################################################
 
 #restricciones
 #1 Relación cosecha y desecho
@@ -435,7 +362,6 @@ m.addConstr(quicksum(gamma[r,p,t] for r in [9, 10] for t in T for p in P) <= qui
 #obj5 = -quicksum((u[i,p,t,j]*FF*UP) for i in TU for t in T for p in P for j in J)
 #obj = obj1 + obj2 + obj3 + obj4 
 
-
 #funcion objetivo de maximización
 obj1 = (-1) * quicksum(v[l,t,o]*((PL[l])+(AT*TL[l]*(1-q[l-1][t-1])*quicksum(BO[i]*UL[l][i-1] for i in TU))) for t in T for l in L) - quicksum(n[l,t,o] * PL_lo[o - 1][l - 1] for o in O for t in T for l in L)
 obj2 = (-1) * quicksum(PFC * CC + PVC * h[w] for w in range(5,15)) 
@@ -444,17 +370,16 @@ obj3 = (-1) * quicksum(alpha[k,p]*PT2[p][k] for p in P for k in K)
 obj4 = quicksum(((1333.333333*gamma[r,p,t]))*(PR[r]-PB) for r in R for t in T for p in P)
 #obj5 = -quicksum((u[i,p,t,j]*FF*UP) for i in TU for t in T for p in P for j in J)
 obj = obj1 + obj2 + obj3 + obj4 
-
 m.setObjective(obj,GRB.MAXIMIZE)
 
 #resultados
 m.write("Modelo {}.lp".format(m.ModelName))  # crear un lp con el nombre definido del modelo
-m.write(f"Modelo E3_pt{parte}.lp")  # crear un lp con un nombre predeterminado
+m.write("Modelo E3.lp")  # crear un lp con un nombre predeterminado
 m.Params.MIPGap = 0.3
 m.optimize()
 
 # Escribir la solucion
 m.write("Solucion {}.mst".format(m.ModelName))
-m.write(f"Solucion_E3_pt{parte}.mst")
-m.write(f"Solucion_E3_pt{parte}.sol")
+m.write("Solucion_E3.mst")
+m.write("Solucion_E3_c3_rial.sol")
 #m.printAttr("x")

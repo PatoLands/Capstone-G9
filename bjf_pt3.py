@@ -3,6 +3,10 @@ import csv
 import generador_calidad
 #import parametros as p
 
+parte = 3
+limite_superior = 10 * (parte-1)
+
+
 ruta = "q_lt_lluvia_esperada.csv"
 q_generador = []
 with open(ruta, "r") as archivo:
@@ -17,10 +21,12 @@ with open(ruta, "r") as archivo:
         for elem in datos:
             datos2.append(float(elem))
         q_generador.append([lote]+datos2)
-q_generado = generador_calidad.simulador_rodante(q_generador, 120)
+q_generado = generador_calidad.simulador_rodante(q_generador, 60)
 q = q_generado
 for i in range(len(q)):
     q[i] = q[i][1:]
+for i in range(len(q)):
+    q[i] = q[i][30:130]
 
 # paramétros (ojo que KT,UL, PT las transpuse con respecto a lo que estaba en el pdf)
 PL = [0, 18624.444444444445, 46751.333333333336, 29578.333333333332, 14838.125, 20872.222222222223, 13945.0, 40732.875, 37166.722222222226, 16321.11111111111, 7351.902777777777, 49086.666666666664, 38194.444444444445, 53247.41666666666, 37984.43055555555, 8812.5, 47313.166666666664, 52153.29166666666, 22916.666666666668, 24686.36111111111, 18927.5, 35962.24999999999, 25559.333333333332, 18519.86111111111, 34499.666666666664, 16887.5, 41968.66666666666, 17547.5, 23563.416666666668, 19535.166666666664, 6491.625000000001, 18943.13888888889, 50694.458333333336, 31585.5, 10500.0, 31597.222222222223, 39166.666666666664, 34315.11111111111, 12077.819444444445, 15293.666666666666, 14223.624999999998, 41546.75, 29653.08333333333, 11308.388888888889, 21629.416666666668, 48506.20833333333, 44658.055555555555, 15701.666666666664, 31645.166666666668, 41280.555555555555, 35494.0, 39123.333333333336, 32805.00000000001, 12933.250000000002, 19564.972222222223, 47845.555555555555, 33188.833333333336, 16536.777777777777, 12028.500000000002, 45900.833333333336, 36421.555555555555, 28075.791666666664, 20231.666666666668, 10847.347222222224, 34406.583333333336, 29701.38888888889, 7461.055555555557, 31733.43055555555, 16486.749999999996, 17654.166666666668, 9961.291666666666, 29667.083333333332, 22616.777777777777, 26424.666666666664, 12202.222222222223, 18444.444444444445, 26128.166666666668, 32272.48611111111, 29419.0, 36367.583333333336, 26010.0, 35210.99999999999, 31261.597222222223, 50137.833333333336, 18606.88888888889, 12502.38888888889, 22082.083333333332, 45694.444444444445, 21666.666666666668, 22810.694444444445, 6592.055555555555, 40227.805555555555, 39479.0, 36249.22222222222, 32643.875, 18794.958333333332, 29646.944444444445, 49078.583333333336, 38767.666666666664, 11693.166666666666, 31729.625, 13493.041666666668, 34141.13888888889, 38362.569444444445, 31584.583333333332, 9259.930555555555, 27697.25, 33057.305555555555, 17008.5, 16047.166666666664, 49585.958333333336, 27114.527777777777, 24893.0, 36200.791666666664, 30605.972222222223, 23461.59722222222, 11376.486111111111, 37903.055555555555, 49461.55555555555, 14167.416666666668, 18930.555555555555, 26475.291666666668, 8587.555555555555, 27187.416666666668, 7250.458333333333, 12480.819444444447, 16486.805555555555, 17361.11111111111, 21323.250000000004, 10582.777777777777, 12504.63888888889, 12645.652777777777, 40582.166666666664, 16693.527777777777, 13493.041666666668, 33877.77777777778, 39083.333333333336, 41790.0, 46550.08333333334, 26687.791666666668, 12092.666666666666, 43283.833333333336, 46682.66666666666, 8004.638888888888, 14997.111111111111, 16251.666666666666, 36750.0, 16887.416666666668, 18599.01388888889, 25243.11111111111, 33768.59722222222, 12242.388888888889, 26138.777777777774, 18210.777777777777, 33057.305555555555, 30608.583333333336, 12357.916666666666, 37855.0, 32643.875, 10666.666666666666, 13668.930555555553, 14291.666666666666, 32719.98611111111, 8201.916666666666, 33750.0, 8895.930555555557, 12402.777777777777, 27915.875, 28153.916666666664, 23762.222222222223, 26049.152777777777, 11238.888888888889, 52163.61111111111, 20788.375, 12863.888888888889, 36807.666666666664, 7987.291666666667, 8297.666666666666, 25872.055555555555, 12402.777777777777, 46607.0, 7750.0, 34358.88888888889, 36927.77777777778, 18268.38888888889, 49461.55555555555, 38170.458333333336, 28796.11111111111, 13152.569444444445, 16776.583333333332, 50694.444444444445, 35453.666666666664, 13162.777777777777, 33359.916666666664, 31972.027777777774, 37208.333333333336, 35001.11111111111, 31298.666666666668, 35069.444444444445, 17574.194444444445, 30647.68055555556, 13055.555555555555, 29166.666666666668, 27857.25, 9303.444444444445, 29428.819444444445, 24646.5, 42645.666666666664, 17992.625, 24538.79166666667, 44526.166666666664, 45741.458333333336, 22601.33333333333, 34445.25000000001, 38791.666666666664, 32973.61111111111, 16164.083333333336, 37760.583333333336, 7543.333333333333, 35643.333333333336, 16336.138888888889, 45321.25, 30500.0, 52252.55555555555, 28172.833333333332, 6559.875, 39894.333333333336, 7500.0, 47979.166666666664, 15048.777777777777, 17141.291666666664, 31195.555555555555, 26264.291666666668, 24544.51388888889, 23750.0, 15888.75, 25384.36111111111, 6841.958333333333, 18850.333333333332, 23173.61111111111, 9824.555555555555, 26052.027777777777, 17603.666666666668, 49911.944444444445, 14787.458333333334, 24921.20833333333, 47203.333333333336, 34027.77777777778, 34855.333333333336, 45136.65277777778, 30222.222222222223, 11805.555555555555, 12848.625, 11216.111111111111, 13880.166666666666, 49156.125, 11111.111111111111, 41613.0, 9782.486111111111, 6879.805555555556, 22708.333333333332, 34825.0, 40795.0, 19084.625000000004, 28561.94444444444, 39819.444444444445, 50504.666666666664, 56931.88888888889, 25797.055555555555, 31376.25, 8812.5, 9915.013888888889, 30168.152777777777, 22520.833333333332, 33625.291666666664, 34555.333333333336, 31167.555555555555, 22923.208333333332, 16661.18055555556, 42324.33333333333, 40604.583333333336, 11376.486111111111, 46236.666666666664, 15859.63888888889, 37434.666666666664, 36277.99999999999, 24070.75, 10416.666666666666, 18915.416666666668, 33087.527777777774, 29166.666666666668]
@@ -34,6 +40,7 @@ TC = 20
 CC = 100
 KT = [[0,0,0,0,0],[0, 500.0, 500.0, 200.0, 100.0], [0, 400.0, 300.0, 200.0, 200.0], [0, 350.0, 400.0, 200.0, 150.0]]
 PT = [[0, 0,0,0,0],[0, 5000000.0, 4722222.0, 1777778.0, 833389.0], [0, 4133333.0, 3000000.0, 1955556.0, 1933333.0], [0, 3694444.0, 4133333.0, 1888889.0, 1366667.0]]
+CP = 25 ## capacidad planta
 PT2 = []
 for elem in PT:
     k = []
@@ -88,42 +95,50 @@ PLo = [0, 0.85, 1, 0.92, 1] #cambie el parámetro de PL^o para que fuera uno sue
 # conjuntos
 TU = [1, 2, 3, 4, 5, 6, 7, 8]  # tipos de uva      (i)
 L = list(range(1, 291))        # lotes             (l)
-T = list(range(1, 162))        # días o periodos   (t)
+T = list(range(1, 101))        # días o periodos   (t)
 P = [1, 2, 3]                  # plantas           (p)
 J = list(range(1, 53))         # tánques           (j)
 K = [1, 2, 3, 4]               # tramos            (k)
 R = list(range(1, 19))         # recetas / blends  (r) #son 18 recetas
-
+O = [3]   
 #q = # simular
 #q_2 = # este es q', tambien simular.
-
+W = list(range(1, 15))  
 # modelo
 m = Model("ETC")
 
-# variables
-v     = {}
-x     = {}
-c     = {}
-z     = {}
-I     = {}
-alpha = {}
-beta  = {}
-gamma = {}
-f = {}
-wC = {}
-wE = {}
-y = {}
-a = {}
-h = {}
-#u = {}
+# VARIABLES (19)
+v = {}          #l,t,o
+s = {}          #l,t,o binaria
+a = {}          #l,t,o
+n = {}          #l,t,o
+#aux = {}        #t
+x = {}          #i,p,t
+f = {}          #i,t
+wC = {}         #i,t
+wT = {}         #i,t
+wV = {}         #i,p,t
+wE = {}         #i,p,t,j
+y = {}          #i,p,t,j
+c = {}          #i,p,t
+h = {}          #w
+z = {}          #i,p,t,j
+I = {}          #i,p,t,j
+alpha = {}      #k,p
+beta = {}       #i,p,t,r,j
+gamma = {}      #r,p,t
 
 for t in T:
+    #aux[t]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, ub= 1.0, name="aux_{}".format(t))
     for i in TU:
         f[i,t]=m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="f_{}_{}".format(i,t))
         wC[i,t]=m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="wC_{}_{}".format(i,t))
+        wT[i, t]=m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="wT_{}_{}".format(i,t))
         for p in P:
             x[i,p,t]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="x_{}_{}_{}".format(i,p,t))
             c[i,p,t]= m.addVar(vtype=GRB.INTEGER, lb=0.0, name="c_{}_{}_{}".format(i,p,t))
+            wV[i, p, t]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="wV_{}_{}_{}".format(i,p,t))
+
             for j in J:
                 z[i,p,t,j]= m.addVar(vtype=GRB.BINARY, lb=0.0, name="z_{}_{}_{}_{}".format(i,p,t,j))
                 y[i,p,t,j]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="y_{}_{}_{}_{}".format(i,p,t,j))
@@ -133,8 +148,11 @@ for t in T:
                 for r in R:
                     beta[i,p,t,r,j]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, name="beta_{}_{}_{}_{}_{}".format(i,p,t,r,j))
     for l in L:
-        v[l,t]= m.addVar(vtype=GRB.BINARY, lb=0.0, name="v_{}_{}".format(l,t))
-        a[l,t]= m.addVar(vtype=GRB.BINARY, lb=0.0, name="a_{}_{}".format(l,t))
+        for o in O:
+            v[l, t, o]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, ub= 1.0, name="v_{}_{}_{}".format(l,t,o))
+            s[l, t, o]= m.addVar(vtype=GRB.BINARY, lb=0.0, name="s_{}_{}_{}".format(l,t,o))
+            a[l, t, o]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0, ub= 1.0, name="a_{}_{}_{}".format(l,t,o))
+            n[l, t, o]= m.addVar(vtype=GRB.CONTINUOUS, lb=0.0,  ub= 1.0, name="n_{}_{}_{}".format(l,t,o))
 
 for p in P:
     for t in T:
@@ -143,15 +161,39 @@ for p in P:
     for k in K:
         alpha[k,p]= m.addVar(vtype=GRB.BINARY, lb=0.0, name="alpha_{}_{}".format(k,p))
 
-for w in range(1, 22):
+for w in range(1, 15):
     h[w]=m.addVar(vtype=GRB.INTEGER, lb=0.0, name="h_{}".format(w))
+
+# q__lt binaria con 1 si q_lt < 0.95 y  0 e.o.c.
+q__lt = []
+for i in q:
+    aux = []
+    for j in i:
+        if j < 0.95:
+            valor = 1           
+        else:
+            valor = 0
+        aux.append(valor)
+    q__lt.append(aux)
+
+#PL_lo 
+PL_lo =[]
+for i in range (3):
+    aux = []
+    for j in PL:
+        if i == 0:
+            aux.append(j * 0.85)
+        elif i == 1:
+            aux.append(j * 0.93)
+        else:
+            aux.append(j)
+    PL_lo.append(aux)
+
 m.update()
 
 ###############################################################################
-limite_superior = 120
-###############################################################################
 
-with open('Solucion_pt2_pal_csv.sol', newline='\n') as csvfile:
+with open('Solucion_pt1.sol', newline='\n') as csvfile:
     reader = csv.reader((line.replace('  ', ' ') for line in csvfile), delimiter=' ')
     next(reader)  # skip header
     sol = {}
@@ -181,16 +223,22 @@ def t_en_2(var, key, sol, limite_superior, m):
 for key in sol:
     key2 = extract_variable(key)
     #caso t en 2
-    if key2 == "v" or key2 == "a" or key2 == "f" or key2 == "wC":
-        if key2 == "v": t_en_2(v, key, sol, limite_superior, m)
-        elif key2 == "a": t_en_2(a, key, sol, limite_superior, m)
-        elif key2 == "f": t_en_2(f, key, sol, limite_superior, m)
+    if  key2 == "f" or key2 == "wC" or key2 == "wT":
+        #if key2 == "v": t_en_2(v, key, sol, limite_superior, m)
+        #elif key2 == "a": t_en_2(a, key, sol, limite_superior, m)
+        if key2 == "f": t_en_2(f, key, sol, limite_superior, m)
         elif key2 == "wC": t_en_2(wC, key, sol, limite_superior, m)
-    elif key2 == "x" or key2 == "c" or key2 == "z" or key2 == "y" or key2 == "u" or key2 == "I" or key2 == "wE" or key2 == "beta" or key2 == "gamma":
+        elif key2 == "wT": t_en_2(wT, key, sol, limite_superior, m)
+    elif key2 == "v" or key2 == "a" or key2 == "s" or key2 == "n" or key2 == "x" or key2 == "c" or key2 == "z" or key2 == "y" or key2 == "u" or key2 == "I" or key2 == "wE" or key2 == "beta" or key2 == "gamma" or key2 == "wV":
         var_como_lista = list(map(int,key.split('_')[1:]))
         if var_como_lista[2] <= limite_superior:
             if key2 == "x": m.addConstr(x[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
             elif key2 == "c": m.addConstr(c[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
+            elif key2 == "v": m.addConstr(v[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
+            elif key2 == "s": m.addConstr(s[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
+            elif key2 == "a": m.addConstr(a[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
+            elif key2 == "n": m.addConstr(n[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
+            elif key2 == "wV": m.addConstr(wV[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
             elif key2 == "gamma": m.addConstr(gamma[var_como_lista[0],var_como_lista[1],var_como_lista[2]] == sol[key])
             elif key2 == "z": m.addConstr(z[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3]] == sol[key])
             elif key2 == "y": m.addConstr(y[var_como_lista[0],var_como_lista[1],var_como_lista[2],var_como_lista[3]] == sol[key])
@@ -203,32 +251,66 @@ for key in sol:
         m.addConstr(alpha[var_como_lista[0],var_como_lista[1]] >= sol[key])
   
 m.update()
+
+###############################################################################
+
 #restricciones
 #1 Relación cosecha y desecho
 for t in T:
          for i in TU:
-            m.addConstr(quicksum((v[l, t]*TL[l]*UL[l][i-1])-wC[i, t] for l in L) == f[i, t])
+            m.addConstr(quicksum((v[l, t,o]*TL[l]*UL[l][i-1])-wC[i, t] for l in L) == f[i, t])
             #m.addConstr(quicksum((v[l, t]*TL[l]*UL[l][i-1]) for l in L) == f[i, t])
 
 # 1´´
-for w in range(1,22):
-    m.addConstr(quicksum(c[i,p,t] for i in TU for p in P for t in range(7*w,7*w+7)) - CC <= h[w])
+for w in range(1,14):
+    m.addConstr(quicksum(c[i,p,t] for i in TU for p in P for t in range(7*w,7*w+6)) - CC <= h[w])
     m.addConstr(h[w]<=100)
 for i in TU:
     for p in P:
-        for t in range(1,64):
+        for t in range(1,34):
             m.addConstr(c[i,p,t]==0)
 #2 Definición de variable vlto y slto
-for l in L:
-    m.addConstr(quicksum(v[l,t]for t in T) <= 1)
 
-#3
 for l in L:
-    m.addConstr(quicksum(a[l,t] for t in T) == quicksum(v[l,t] for t in T))
-    for t in range(1,155):
-        m.addConstr(a[l,t] <= quicksum(v[l,e] for e in range(t+3,t+6)))
-    for t in range(154, 162):
-        m.addConstr(a[l,t] == 0)
+    #m.addConstr(quicksum(v[l,t,o]for t in T for o in O) <= 1) #(2.1)
+    m.addConstr(quicksum(n[l,t,o]for t in T for o in O) <= 1)  #(3.5.2) #nuevo 2.1
+for l in L:
+    for t in T:
+        for o in O:
+            m.addConstr(n[l, t, o] <= s[l, t, o])    #(2.2)  
+        
+for l in L:
+    m.addConstr(quicksum(s[l,t,3]for t in T ) <= 1) 
+    for t in T:
+        m.addConstr(a[l,t,3] <= n[l,t,3])      #3.10
+#for l in L:
+#    for t in T:
+#        #m.addConstr(n[l,t,1] == s[l,t,1])                      #(2.3)  
+#        m.addConstr(n[l,t,2] == s[l,t,2] * 0.5)    
+#        if t <= 161-12:
+#            m.addConstr(quicksum(a[l,w,2] for w in range(t+12,162)) <= quicksum(n[l,w,2]for w in range(1,t))) # 3.7
+#for t in T:
+#    if t > 161-12:
+#        m.addConstr(quicksum(a[l,t,2] for l in L) == 0) # 3.8
+#        m.addConstr(quicksum(n[l,t,2] for l in L) == 0) # 3.9
+
+# 3. Definición de variables relacionadas a contratos a[l,t,o] y n[l,t,o]
+for l in L:
+    for o in O:
+        m.addConstr(quicksum(v[l,t,o]for t in T) == quicksum(a[l,t,o]for t in T))
+        for t in T: #(3.1)
+            if t>3:
+                m.addConstr(v[l,t,o] == a[l,t-3,o])                                       #(3.2)
+for l in L:
+    for o in O:
+        m.addConstr(quicksum(a[l, t, o] for t in T) <= quicksum(n[l,t,o] for t in T))   
+#3
+#for l in L:
+#    m.addConstr(quicksum(a[l,t] for t in T) == quicksum(v[l,t] for t in T))
+#    for t in range(1,155):
+#        m.addConstr(a[l,t] <= quicksum(v[l,e] for e in range(t+3,t+6)))
+#    for t in range(154, 162):
+#        m.addConstr(a[l,t] == 0)
     
 
 #4 Capacidad camiones
@@ -252,8 +334,8 @@ for i in TU:
         for t in T:
             if t>0:
                 for j in J:
-                    m.addConstr(y[i,p,t,j] <= 25* z[i,p,t,j])
-                    m.addConstr(12.5*z[i,p,t,j] <= y[i,p,t,j])
+                    m.addConstr(y[i,p,t,j] <= CP* z[i,p,t,j])
+                    m.addConstr(z[i,p,t,j] * CP/2 <= y[i,p,t,j])
 
 
 #7 limitaciones de tanques por planta
@@ -267,7 +349,7 @@ for t in T:
         for j in J:
             for p in P:
                 m.addConstr(quicksum(z[i,p,t,j]for i in TU) <= 1 )
-                if t<152:
+                if t<91:
                     m.addConstr(quicksum(z[i,p,e,j] for i in TU for e in range(t + 1, t + 9)) <= (1 - quicksum(z[i,p,t,j] for i in TU)))
 
 
@@ -276,8 +358,8 @@ for t in T:
 
 for t in T:
     for p in P:
-        if t<152:
-            m.addConstr(25 * quicksum(z[i,p,e,j] for i in TU for j in J for e in range(t, t+9)) <= quicksum(alpha[k,p] * KT[p][k] for k in K))
+        if t<91:
+            m.addConstr(CP * quicksum(z[i,p,e,j] for i in TU for j in J for e in range(t, t+9)) <= quicksum(alpha[k,p] * KT[p][k] for k in K))
 for k in [1,2,3]:
     for p in P:
         m.addConstr(alpha[k+1,p] <= alpha[k,p])
@@ -291,7 +373,7 @@ for i in TU:
                     m.addConstr(I[i, p, t, j] == 0)
                     m.addConstr(y[i, p, t, j] == 0)
                 elif t>14:
-                    m.addConstr(I[i, p, t, j] <= 25 * (1 - z[i, p, t - 14, j]))
+                    m.addConstr(I[i, p, t, j] <= CP * (1 - z[i, p, t - 14, j]))
 
 for i in TU:
     for j in J:
@@ -346,8 +428,18 @@ m.addConstr(quicksum(gamma[r,p,t] for r in [9, 10] for t in T for p in P) <= qui
 #            for t in T:
 #                m.addConstr(y[i, p, t, j] <= 25 * (CM/100)*u[i, p, t, j] )
 #funcion objetivo de maximización
-obj1 = (-1) * quicksum(v[l,t]*((PL[l])+(AT*TL[l]*(1-q[l-1][t-1])*quicksum(BO[i]*UL[l][i-1] for i in TU))) for t in T for l in L)
-obj2 = (-1) * quicksum(PFC * CC + PVC * h[w] for w in range(8,21))
+#obj1 = (-1) * quicksum(v[l,t]*((PL[l])+(AT*TL[l]*(1-q[l-1][t-1])*quicksum(BO[i]*UL[l][i-1] for i in TU))) for t in T for l in L)
+#obj2 = (-1) * quicksum(PFC * CC + PVC * h[w] for w in range(8,21))
+#obj3 = (-1) * quicksum(alpha[k,p]*PT2[p][k] for p in P for k in K)
+#obj4 = quicksum(((1333.333333*gamma[r,p,t]))*(PR[r]-PB) for r in R for t in T for p in P)
+#obj5 = -quicksum((u[i,p,t,j]*FF*UP) for i in TU for t in T for p in P for j in J)
+#obj = obj1 + obj2 + obj3 + obj4 
+
+
+#funcion objetivo de maximización
+obj1 = (-1) * quicksum(v[l,t,o]*((PL[l])+(AT*TL[l]*(1-q[l-1][t-1])*quicksum(BO[i]*UL[l][i-1] for i in TU))) for t in T for l in L) - quicksum(n[l,t,o] * PL_lo[o - 1][l - 1] for o in O for t in T for l in L)
+obj2 = (-1) * quicksum(PFC * CC + PVC * h[w] for w in range(5,15)) 
+#obj2 = (-1) * quicksum(PFC * CC + PVC * (quicksum(c[i,p,t] for t in range (7 * w, 7 * w + 7) for p in P for i in TU)) -CC for w in W)
 obj3 = (-1) * quicksum(alpha[k,p]*PT2[p][k] for p in P for k in K)
 obj4 = quicksum(((1333.333333*gamma[r,p,t]))*(PR[r]-PB) for r in R for t in T for p in P)
 #obj5 = -quicksum((u[i,p,t,j]*FF*UP) for i in TU for t in T for p in P for j in J)
@@ -357,12 +449,12 @@ m.setObjective(obj,GRB.MAXIMIZE)
 
 #resultados
 m.write("Modelo {}.lp".format(m.ModelName))  # crear un lp con el nombre definido del modelo
-m.write("Modelo pt3.lp")  # crear un lp con un nombre predeterminado
+m.write(f"Modelo E3_pt{parte}.lp")  # crear un lp con un nombre predeterminado
 m.Params.MIPGap = 0.3
 m.optimize()
 
 # Escribir la solucion
 m.write("Solucion {}.mst".format(m.ModelName))
-m.write("Solucion_pt3.mst")
-m.write("Solucion_pt3.sol")
+m.write(f"Solucion_E3_pt{parte}.mst")
+m.write(f"Solucion_E3_pt{parte}.sol")
 #m.printAttr("x")
