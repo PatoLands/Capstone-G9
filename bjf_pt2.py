@@ -21,7 +21,7 @@ with open(ruta, "r") as archivo:
         for elem in datos:
             datos2.append(float(elem))
         q_generador.append([lote]+datos2)
-q_generado = generador_calidad.simulador_rodante(q_generador, 60)
+q_generado = generador_calidad.simulador_rodante(q_generador, 30+10*(parte-1))
 q = q_generado
 for i in range(len(q)):
     q[i] = q[i][1:]
