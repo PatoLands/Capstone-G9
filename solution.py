@@ -1,5 +1,6 @@
 import csv
-with open('Solucion_pt3_pal_csv.sol', newline='\n') as csvfile:
+parte = 6
+with open(f'Solucion_E3_pt{parte}.sol', newline='\n') as csvfile:
     reader = csv.reader((line.replace('  ', ' ') for line in csvfile), delimiter=' ')
     next(reader)  # skip header
     sol = {}
@@ -12,7 +13,7 @@ with open('Solucion_pt3_pal_csv.sol', newline='\n') as csvfile:
 print(variables)
 print()
 
-with open("solution_pt3.csv", "a") as archivo:
+with open(f"solution_pt{parte}.csv", "a") as archivo:
     for key in sol:
         linea = str(key) + ";" + str(sol[key]).replace('.',',') + "\n"
         archivo.write(linea)
@@ -55,7 +56,6 @@ AT = 27253/900
 
 import generador_calidad
 ruta = "q_lt_lluvia_esperada.csv"
-q_esperado = []
 q_generador = []
 with open(ruta, "r") as archivo:
     lineas = archivo.readlines()
@@ -64,16 +64,17 @@ with open(ruta, "r") as archivo:
         datos = linea.strip()
         datos = datos.split(";")
         lote = datos.pop(0)
-        lote = float(lote.split("_")[1])
+        #lote = int(lote.split("_")[1])
         datos2 = []
         for elem in datos:
             datos2.append(float(elem))
         q_generador.append([lote]+datos2)
-        q_esperado.append(datos2)
-q_generado = generador_calidad.simulador_rodante(q_generador, 60)
+q_generado = generador_calidad.simulador_rodante(q_generador, 30+10*(parte-1))
 q = q_generado
 for i in range(len(q)):
     q[i] = q[i][1:]
+for i in range(len(q)):
+    q[i] = q[i][30:130]
 # ruta = "q_lt.csv"
 # q = []
 # with open(ruta, "r") as archivo:
@@ -184,7 +185,7 @@ for i in range(len(elaboracion_dia_planta)):
     for j in range(4):
         elaboracion_dia_planta2[i][j].append(sum(elaboracion_dia_planta[i][j]))
 
-with open("uso_de_tanques_pt3.csv", "a") as archivo:
+with open(f"uso_de_tanques_pt{parte}.csv", "a") as archivo:
     linea = "Planta;"
     for p in range(1, 4):
         linea += str(p) + ";"
